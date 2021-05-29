@@ -16,6 +16,7 @@ const api = process.env.API_URL;
 const productsRouter = require('./routers/products');
 const categoryRouter = require('./routers/categories');
 const userRouter = require('./routers/users');
+const orderRouter = require('./routers/orders');
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
@@ -23,12 +24,14 @@ const errorHandler = require('./helpers/error-handler');
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(authJwt());
+app.use('/public/uploads', express.static(__dirname + '/public/uploads'))
 app.use(errorHandler);
 
 // Routers
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/categories`, categoryRouter);
 app.use(`${api}/users`, userRouter);
+app.use(`${api}/orders`, orderRouter);
 
 app.listen(3003, () => {
     console.log(api);
